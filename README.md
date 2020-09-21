@@ -22,7 +22,7 @@ mvn clean package -f example-service/pom.xml
 # JFR datasource for Grafana
 mvn clean package -f jfr-datasource/pom.xml
 
-docker-compose up --build
+podman-compose up --build
 ```
 
 Open the web application at http://localhost:8080/.
@@ -35,7 +35,7 @@ You also can observe the exported metrics via Grafana at http://localhost:3000/.
 When working on the example service, it can be started in the Quarkus dev mode instead of packaging it as a container image for faster feedback;
 
 ```shell
-docker-compose up --build --scale example-service=0
+podman-compose up --build --scale example-service=0
 
 mvn compile quarkus:dev -f example-service/pom.xml
 ```
