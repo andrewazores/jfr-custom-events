@@ -75,7 +75,7 @@ services:
     image: dev.morling/jfr-data-source:1.0
     build:
       context: jfr-datasource/
-      dockerfile: docker/Dockerfile.jvm
+      dockerfile: src/main/docker/Dockerfile.native
     ports:
       - 8081:8080
     networks:
