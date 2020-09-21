@@ -12,7 +12,7 @@ Update Feb. 8th: the example has been expanded to show the usage of the [JFR dat
 
 ## Build
 
-Make sure to have Java 14 installed.
+Make sure to have Java 14 installed. For containerized demos, you will also need podman (2.0.4), podman-compose (0.1.5), and/or kompose (1.21.0).
 Run the following to build this project:
 
 ```shell
@@ -22,7 +22,13 @@ mvn clean package -f example-service/pom.xml
 # JFR datasource for Grafana
 mvn clean package -f jfr-datasource/pom.xml
 
-podman-compose up --build
+podman-compose up --build # deploy in a plain podman pod setup
+
+# deploy to OpenShift (CRC)
+oc new-project jfr-custom-events
+mkdir openshift
+kompose -v convert -f container-compose.yaml --provider=openshift --volumes=hostPath --out=openshift
+oc apply -f openshift
 ```
 
 Open the web application at http://localhost:8080/.
