@@ -11,7 +11,7 @@ services:
      - POSTGRES_PASSWORD=todopw
      - POSTGRES_DB=tododb
     volumes:
-     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+     - ./init.sql:/docker-entrypoint-initdb.d/init.sql:z
     networks:
      - my-network
 
