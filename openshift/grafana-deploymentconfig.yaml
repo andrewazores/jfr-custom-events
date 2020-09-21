@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    kompose.cmd: /usr/local/bin/kompose -v convert -f container-compose.yaml --provider=openshift
+      --volumes hostPath --out=openshift
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: grafana
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: grafana
+  strategy:
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/flight-recorder-network: "true"
+        io.kompose.service: grafana
+    spec:
+      containers:
+      - env:
+        - name: GF_INSTALL_PLUGINS
+          value: grafana-simple-json-datasource
+        image: ' '
+        name: grafana
+        ports:
+        - containerPort: 3000
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/grafana/provisioning/datasources/datasource.yml
+          name: grafana-hostpath0
+        - mountPath: /etc/grafana/provisioning/dashboards/all.yml
+          name: grafana-hostpath1
+        - mountPath: /var/lib/grafana/dashboards/grafana-todo-dashboard.json
+          name: grafana-hostpath2
+      restartPolicy: Always
+      volumes:
+      - hostPath:
+          path: /home/andrew/workspace/jfr-custom-events/grafana-datasource.yml
+        name: grafana-hostpath0
+      - hostPath:
+          path: /home/andrew/workspace/jfr-custom-events/grafana-all-dashboards.yml
+        name: grafana-hostpath1
+      - hostPath:
+          path: /home/andrew/workspace/jfr-custom-events/grafana-todo-dashboard.json
+        name: grafana-hostpath2
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - grafana
+      from:
+        kind: ImageStreamTag
+        name: grafana:latest
+    type: ImageChange
+status: {}
