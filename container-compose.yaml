@@ -29,7 +29,7 @@ services:
       - my-network
 
   example-service:
-    image: dev.morling/flight-recorder-example-service:1.0
+    image: quay.io/andrewazores/flight-recorder-example-service:1.0
     build:
       context: example-service/
       dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
@@ -72,7 +72,7 @@ services:
       - my-network
 
   jfr-data-source:
-    image: dev.morling/jfr-data-source:1.0
+    image: quay.io/andrewazores/jfr-data-source:1.0
     build:
       context: jfr-datasource/
       dockerfile: src/main/docker/Dockerfile.native
