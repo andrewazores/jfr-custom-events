@@ -22,7 +22,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
     volumes:
-     - ./servers.json:/pgadmin4/servers.json
+      - ./servers.json:/pgadmin4/servers.json:z
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
@@ -50,7 +50,7 @@ services:
     links:
       - example-service
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:z
     networks:
       - my-network
 
@@ -62,8 +62,8 @@ services:
       - prometheus
      #- jfr-data-source
     volumes:
-      - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
-      - ./grafana-all-dashboards.yml:/etc/grafana/provisioning/dashboards/all.yml
+      - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:z
+      - ./grafana-all-dashboards.yml:/etc/grafana/provisioning/dashboards/all.yml:z
       - ./grafana-todo-dashboard.json:/var/lib/grafana/dashboards/grafana-todo-dashboard.json
      #- ./jfr-datasource/dashboards/dashboard.json:/var/lib/grafana/dashboards/grafana-jfr-dashboard.json
     environment:
