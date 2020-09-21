@@ -72,7 +72,7 @@ services:
       - my-network
 
 # jfr-data-source:
-#   image: quay.io/andrewazores/jfr-data-source:1.0
+#   image: quay.io/andrewazores/jfr-datasource:1.0
 #   build:
 #     context: jfr-datasource/
 #     dockerfile: src/main/docker/Dockerfile.native
