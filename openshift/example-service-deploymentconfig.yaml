@@ -2,8 +2,8 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   annotations:
-    kompose.cmd: /usr/local/bin/kompose -v convert -f container-compose.yaml --provider=openshift
-      --volumes hostPath --out=openshift
+    kompose.cmd: kompose -v convert -f container-compose.yaml --provider=openshift
+      --out=openshift
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
@@ -19,7 +19,6 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.network/flight-recorder-network: "true"
         io.kompose.service: example-service
     spec:
       containers:

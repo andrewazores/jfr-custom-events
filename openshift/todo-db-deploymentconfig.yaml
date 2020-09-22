@@ -2,8 +2,8 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   annotations:
-    kompose.cmd: /usr/local/bin/kompose -v convert -f container-compose.yaml --provider=openshift
-      --volumes hostPath --out=openshift
+    kompose.cmd: kompose -v convert -f container-compose.yaml --provider=openshift
+      --out=openshift
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
   labels:
@@ -15,12 +15,10 @@ spec:
     io.kompose.service: todo-db
   strategy:
     resources: {}
-    type: Recreate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.network/flight-recorder-network: "true"
         io.kompose.service: todo-db
     spec:
       containers:
@@ -36,14 +34,9 @@ spec:
         ports:
         - containerPort: 5432
         resources: {}
-        volumeMounts:
-        - mountPath: /docker-entrypoint-initdb.d/init.sql
-          name: todo-db-hostpath0
+        securityContext:
+          privileged: true
       restartPolicy: Always
-      volumes:
-      - hostPath:
-          path: /home/andrew/workspace/jfr-custom-events/init.sql
-        name: todo-db-hostpath0
   test: false
   triggers:
   - type: ConfigChange
@@ -53,6 +46,6 @@ spec:
       - todo-db
       from:
         kind: ImageStreamTag
-        name: todo-db:11
+        name: todo-db:1.0
     type: ImageChange
 status: {}

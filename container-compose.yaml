@@ -3,30 +3,17 @@ version: '3.5'
 services:
 
   todo-db:
-    image: postgres:11
+    image: quay.io/andrewazores/demo-postgres:1.0
+    build:
+        context: demo-postgres/
+        dockerfile: Dockerfile
     ports:
      - 5432:5432
     environment:
      - POSTGRES_USER=todouser
      - POSTGRES_PASSWORD=todopw
      - POSTGRES_DB=tododb
-    volumes:
-     - ./init.sql:/docker-entrypoint-initdb.d/init.sql:z
-    networks:
-     - my-network
-
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-    volumes:
-      - ./servers.json:/pgadmin4/servers.json:z
-    ports:
-      - "${PGADMIN_PORT:-5050}:80"
-    networks:
-      - my-network
+    privileged: true
 
   example-service:
     image: quay.io/andrewazores/flight-recorder-example-service:1.0
@@ -40,47 +27,3 @@ services:
       QUARKUS_DATASOURCE_URL: jdbc:postgresql://todo-db:5432/tododb
     links:
       - todo-db
-    networks:
-      - my-network
-
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - 9090:9090
-    links:
-      - example-service
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:z
-    networks:
-      - my-network
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - 3000:3000
-    links:
-      - prometheus
-     #- jfr-data-source
-    volumes:
-      - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:z
-      - ./grafana-all-dashboards.yml:/etc/grafana/provisioning/dashboards/all.yml:z
-      - ./grafana-todo-dashboard.json:/var/lib/grafana/dashboards/grafana-todo-dashboard.json
-     #- ./jfr-datasource/dashboards/dashboard.json:/var/lib/grafana/dashboards/grafana-jfr-dashboard.json
-    environment:
-      GF_INSTALL_PLUGINS: grafana-simple-json-datasource
-    networks:
-      - my-network
-
-# jfr-data-source:
-#   image: quay.io/andrewazores/jfr-datasource:1.0
-#   build:
-#     context: jfr-datasource/
-#     dockerfile: src/main/docker/Dockerfile.native
-#   ports:
-#     - 8081:8080
-#   networks:
-#     - my-network
-
-networks:
-  my-network:
-    name: flight-recorder-network

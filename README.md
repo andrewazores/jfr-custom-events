@@ -25,11 +25,10 @@ mvn clean package -f jfr-datasource/pom.xml
 podman-compose up --build # deploy in a plain podman pod setup
 
 # deploy to OpenShift (CRC)
-oc adm policy add-scc-to-user privileged -n jfr-custom-events -z default
-oc new-project jfr-custom-events
 mkdir openshift
-kompose -v convert -f container-compose.yaml --provider=openshift --volumes=hostPath --out=openshift
+kompose -v convert -f container-compose.yaml --provider=openshift --out=openshift
 oc apply -f openshift
+oc expose svc example-service
 ```
 
 Open the web application at http://localhost:8080/.

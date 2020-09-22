@@ -10,9 +10,9 @@ spec:
   - annotations: null
     from:
       kind: DockerImage
-      name: postgres:11
+      name: quay.io/andrewazores/demo-postgres:1.0
     generation: null
     importPolicy: {}
-    name: "11"
+    name: "1.0"
 status:
   dockerImageRepository: ""
