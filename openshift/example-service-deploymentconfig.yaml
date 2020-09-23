@@ -29,7 +29,7 @@ spec:
         name: example-service
         ports:
         - containerPort: 8080
-        - containerPort: 1898
+        - containerPort: 9091
         resources: {}
       restartPolicy: Always
   test: false
@@ -41,6 +41,6 @@ spec:
       - example-service
       from:
         kind: ImageStreamTag
-        name: example-service:1.0
+        name: example-service:1.2
     type: ImageChange
 status: {}

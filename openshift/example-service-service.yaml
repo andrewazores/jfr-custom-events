@@ -14,9 +14,9 @@ spec:
   - name: "8080"
     port: 8080
     targetPort: 8080
-  - name: "1898"
-    port: 1898
-    targetPort: 1898
+  - name: "9091"
+    port: 9091
+    targetPort: 9091
   selector:
     io.kompose.service: example-service
 status:

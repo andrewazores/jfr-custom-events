@@ -16,13 +16,13 @@ services:
     privileged: true
 
   example-service:
-    image: quay.io/andrewazores/flight-recorder-example-service:1.0
+    image: quay.io/andrewazores/flight-recorder-example-service:1.2
     build:
       context: example-service/
       dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}
     ports:
       - 8080:8080
-      - 1898:1898
+      - 9091:9091
     environment:
       QUARKUS_DATASOURCE_URL: jdbc:postgresql://todo-db:5432/tododb
     links:
