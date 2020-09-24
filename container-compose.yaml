@@ -16,6 +16,7 @@ services:
 #     - CONTAINER_JFR_RJMX_PASS=pass
 #   links:
 #     - example-service
+#     - vertx-fib-demo
 
   todo-db:
     hostname: todo-db
@@ -44,3 +45,10 @@ services:
       QUARKUS_DATASOURCE_URL: jdbc:postgresql://todo-db:5432/tododb
     links:
       - todo-db
+
+  vertx-fib-demo:
+    hostname: vertx-fib-demo
+    image: quay.io/andrewazores/vertx-fib-demo:0.2.0
+    ports:
+      - 8888:8080
+      - 9093:9093
