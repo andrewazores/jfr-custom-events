@@ -33,7 +33,7 @@ services:
 
   example-service:
     hostname: example-service
-    image: quay.io/andrewazores/flight-recorder-example-service:1.5
+    image: quay.io/andrewazores/flight-recorder-example-service:1.6
     build:
       context: example-service/
       dockerfile: src/main/docker/Dockerfile.${QUARKUS_MODE:-jvm}

@@ -10,9 +10,9 @@ spec:
   - annotations: null
     from:
       kind: DockerImage
-      name: quay.io/andrewazores/flight-recorder-example-service:1.5
+      name: quay.io/andrewazores/flight-recorder-example-service:1.6
     generation: null
     importPolicy: {}
-    name: "1.5"
+    name: "1.6"
 status:
   dockerImageRepository: ""
