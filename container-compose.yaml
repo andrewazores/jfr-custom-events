@@ -2,11 +2,29 @@ version: '3.5'
 
 services:
 
+# container-jfr:
+#   container-name: container-jfr
+#   hostname: container-jfr
+#   image: quay.io/andrewazores/container-jfr:0.21.0
+#   ports:
+#     - 9092:9092
+#     - 8181:8181
+#   environment:
+#     - CONTAINER_JFR_RJMX_PORT=9092
+#     - CONTAINER_JFR_RMI_PORT=9092
+#     - CONTAINER_JFR_WEB_HOST=0.0.0.0
+#     - CONTAINER_JFR_RJMX_USER=user
+#     - CONTAINER_JFR_RJMX_PASS=pass
+#   links:
+#     - example-service
+
   todo-db:
+    container-name: todo-db
+    hostname: todo-db
     image: quay.io/andrewazores/demo-postgres:1.0
     build:
-        context: demo-postgres/
-        dockerfile: Dockerfile
+      context: demo-postgres/
+      dockerfile: Dockerfile
     ports:
      - 5432:5432
     environment:
@@ -16,6 +34,8 @@ services:
     privileged: true
 
   example-service:
+    container-name: example-service
+    hostname: example-service
     image: quay.io/andrewazores/flight-recorder-example-service:1.2
     build:
       context: example-service/

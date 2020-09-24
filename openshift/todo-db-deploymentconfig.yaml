@@ -36,6 +36,7 @@ spec:
         resources: {}
         securityContext:
           privileged: true
+      hostname: todo-db
       restartPolicy: Always
   test: false
   triggers:
