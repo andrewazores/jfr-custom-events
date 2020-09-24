@@ -42,6 +42,6 @@ spec:
       - example-service
       from:
         kind: ImageStreamTag
-        name: example-service:1.3
+        name: example-service:1.5
     type: ImageChange
 status: {}
